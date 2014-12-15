@@ -1,5 +1,5 @@
 require_relative 'db_connection'
-require_relative '01_sql_object'
+require_relative 'sql_object'
 
 module Searchable
   def where(params)
@@ -11,7 +11,7 @@ module Searchable
       end
     end
     where_line = wheres.join(' AND ')
-    # p "IN HERE: #{where_line}"
+
     results = DBConnection.execute(<<-SQL)
     SELECT
       *
@@ -21,7 +21,6 @@ module Searchable
       #{where_line}
     SQL
 
-    # p "GOT TO HERE: #{results}"
     results.map { |result| new(result) }
   end
 end
